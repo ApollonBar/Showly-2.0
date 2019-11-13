@@ -8,10 +8,12 @@ import javax.inject.Inject
 class UiCache @Inject constructor() {
 
   var discoverSearchPosition = 0F
+  var discoverFiltersPosition = 0F
   var myShowsSectionPositions = mutableMapOf<MyShowsSection, Pair<Int, Int>>()
 
   fun clear() {
     discoverSearchPosition = 0F
+    discoverFiltersPosition = 0F
     myShowsSectionPositions.clear()
   }
 }

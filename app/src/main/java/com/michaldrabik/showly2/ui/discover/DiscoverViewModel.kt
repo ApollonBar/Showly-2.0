@@ -98,8 +98,9 @@ class DiscoverViewModel @Inject constructor(
     }
   }
 
-  fun saveUiPositions(searchPosition: Float) {
+  fun saveUiPositions(searchPosition: Float, filtersPosition: Float) {
     uiCache.discoverSearchPosition = searchPosition
+    uiCache.discoverFiltersPosition = filtersPosition
   }
 
   fun clearCache() = uiCache.clear()

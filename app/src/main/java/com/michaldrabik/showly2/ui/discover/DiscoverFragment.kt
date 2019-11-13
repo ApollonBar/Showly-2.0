@@ -59,6 +59,7 @@ class DiscoverFragment : BaseFragment<DiscoverViewModel>(), OnTabReselectedListe
   private fun setupView() {
     discoverSearchView.isClickable = false
     discoverSearchView.onClick { openSearchView() }
+    discoverFiltersView.isClickable = false
   }
 
   private fun setupRecycler() {
@@ -90,6 +91,7 @@ class DiscoverFragment : BaseFragment<DiscoverViewModel>(), OnTabReselectedListe
     hideNavigation()
     animateItemsExit(item)
     discoverSearchView.fadeOut()
+    discoverFiltersView.fadeOut()
   }
 
   private fun openSearchView() {
@@ -121,7 +123,8 @@ class DiscoverFragment : BaseFragment<DiscoverViewModel>(), OnTabReselectedListe
 
   private fun saveUiPositions() {
     viewModel.saveUiPositions(
-      discoverSearchView.translationY
+      discoverSearchView.translationY,
+      discoverFiltersView.translationY
     )
   }
 
@@ -134,12 +137,19 @@ class DiscoverFragment : BaseFragment<DiscoverViewModel>(), OnTabReselectedListe
   private fun render(uiModel: DiscoverUiModel) {
     uiModel.run {
       showLoading?.let {
-        discoverSearchView.isClickable = !it
-        discoverSearchView.isEnabled = !it
+        discoverSearchView.run {
+          isClickable = !it
+          isEnabled = !it
+        }
+        discoverFiltersView.run {
+          isClickable = !it
+          isEnabled = !it
+        }
         discoverSwipeRefresh.isRefreshing = it
       }
       applyUiCache?.let {
         discoverSearchView.translationY = it.discoverSearchPosition
+        discoverFiltersView.translationY = it.discoverFiltersPosition
       }
       resetScroll?.let { if (it) discoverRecycler.scrollToPosition(0) }
       error?.let {
